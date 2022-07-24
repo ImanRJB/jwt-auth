@@ -1,6 +1,6 @@
 <?php
 
-namespace ImanRjb\JwtAuth\Services\TokenGenerator;
+namespace ImanRjb\JwtAuth\Services\AccessToken;
 
 use Illuminate\Support\Facades\Facade;
 
@@ -8,10 +8,10 @@ use Illuminate\Support\Facades\Facade;
  * @method static getNewAddress($type, $path)
  */
 
-class TokenGenerator extends Facade
+class AccessToken extends Facade
 {
     protected static function getFacadeAccessor()
     {
-        return 'tokenGenerator';
+        return 'accessToken';
     }
 }

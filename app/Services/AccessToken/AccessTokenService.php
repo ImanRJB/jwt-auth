@@ -1,10 +1,10 @@
 <?php
 
-namespace ImanRjb\JwtAuth\Services\TokenGenerator;
+namespace ImanRjb\JwtAuth\Services\AccessToken;
 
 use Symfony\Component\HttpFoundation\Response;
 
-class TokenGeneratorService
+class AccessTokenService
 {
     private $network;
 

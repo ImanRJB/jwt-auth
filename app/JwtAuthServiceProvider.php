@@ -13,7 +13,7 @@ class JwtAuthServiceProvider extends ServiceProvider
             $this->mergeConfigFrom(__DIR__ . '/../src/config/jwt-auth.php', 'jwt-auth');
         }
 
-        $this->app->alias(\ImanRjb\JwtAuth\Services\TokenGenerator\TokenGenerator::class, 'TokenGenerator');
-        $this->app->register(\ImanRjb\JwtAuth\Services\TokenGenerator\TokenGeneratorServiceProvider::class);
+        $this->app->alias(\ImanRjb\JwtAuth\Services\AccessToken\AccessToken::class, 'AccessToken');
+        $this->app->register(\ImanRjb\JwtAuth\Services\AccessToken\AccessTokenServiceProvider::class);
     }
 }
