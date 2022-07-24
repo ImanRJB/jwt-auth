@@ -16,7 +16,7 @@ class AccessTokenService
 {
     public function create($user, $userAgent, $ip, $aud = 'web', $scope = '*')
     {
-        try {
+//        try {
             $now = Carbon::now();
             $nowMs = $now->getTimestampMs();
             $expiresIn = $now->addMinutes(config('jwt-auth.access_token_lifetime'));
@@ -75,9 +75,9 @@ class AccessTokenService
             ];
 
             return $respone;
-        } catch (\Exception $exception) {
-            throw new Exception('User not found');
-        }
+//        } catch (\Exception $exception) {
+//            throw new Exception('User not found');
+//        }
     }
 
     public function createFromRefreshToken($refreshToken, $userAgent, $ip, $aud = 'web', $scope = '*')
