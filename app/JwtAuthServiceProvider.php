@@ -3,6 +3,7 @@
 namespace ImanRjb\JwtAuth;
 
 use Illuminate\Support\ServiceProvider;
+use ImanRjb\JwtAuth\Commands\PurgeRevokedTokens;
 
 class JwtAuthServiceProvider extends ServiceProvider
 {
@@ -21,5 +22,10 @@ class JwtAuthServiceProvider extends ServiceProvider
         $this->app->register(\ImanRjb\JwtAuth\Services\AccessToken\AccessTokenServiceProvider::class);
 
         $this->app->register(\Stevebauman\Location\LocationServiceProvider::class);
+
+        // Commands
+        $this->commands([
+            PurgeRevokedTokens::class
+        ]);
     }
 }
