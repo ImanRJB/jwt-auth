@@ -1,0 +1,38 @@
+{
+    "name": "imanrjb/jwt-auth",
+    "description": "JWT authentication for Lumen and Laravel",
+    "keywords": [],
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Iman RJB",
+            "email": "iman.rjb@gmail.com"
+        }
+    ],
+    "require": {
+        "firebase/php-jwt": "^6.3"
+    },
+    "require-dev": {
+
+    },
+    "autoload": {
+        "psr-4": {
+            "ImanRjb\\JwtAuth\\": "src/"
+        }
+    },
+    "extra": {
+        "branch-alias": {
+            "dev-master": "1.0-dev"
+        },
+        "laravel": {
+            "providers": [
+                "ImanRjb\\JwtAuth\\JwtAuthServiceProvider"
+            ]
+        }
+    },
+    "config": {
+        "sort-packages": true
+    },
+    "prefer-stable": true,
+    "minimum-stability": "dev"
+}
