@@ -17,7 +17,7 @@
     },
     "autoload": {
         "psr-4": {
-            "ImanRjb\\JwtAuth\\": "src/"
+            "ImanRjb\\JwtAuth\\": "app/"
         }
     },
     "extra": {
