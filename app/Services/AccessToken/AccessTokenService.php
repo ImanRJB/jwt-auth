@@ -5,7 +5,6 @@ namespace ImanRjb\JwtAuth\Services\AccessToken;
 use Carbon\Carbon;
 use Firebase\JWT\JWT;
 use Firebase\JWT\Key;
-use hisorange\BrowserDetect\Exceptions\Exception;
 use Illuminate\Support\Facades\Hash;
 use ImanRjb\JwtAuth\Models\Token;
 use ImanRjb\JwtAuth\Models\LoginHistory;
@@ -76,7 +75,7 @@ class AccessTokenService
 
             return $respone;
         } catch (\Exception $exception) {
-            throw new Exception('User not found');
+            throw new $exception('User not found');
         }
     }
 
@@ -86,9 +85,9 @@ class AccessTokenService
         $token = Token::whereRefreshToken($refreshTokenHash)->first();
 
         if (!$token) {
-            throw new Exception('Token not found.');
+            throw new \Exception('Token not found.');
         } elseif ($token->refresh_token_expires_at < Carbon::now() or $token->revoked) {
-            throw new Exception('Token has been expired.');
+            throw new \Exception('Token has been expired.');
         }
 
         $token->update(['revoked' => 1]);
@@ -103,14 +102,14 @@ class AccessTokenService
             $token = Token::whereId($decodeToken['payload']['jti'])->first();
 
             if (!$token) {
-                throw new Exception('Token not found.');
+                throw new \Exception('Token not found.');
             } elseif ($token->expires_at < Carbon::now() or $token->revoked) {
-                throw new Exception('Token has been expired.');
+                throw new \Exception('Token has been expired.');
             }
 
             return $token->user;
         } catch (\Exception $exception) {
-            throw new Exception('Token not found.');
+            throw new $exception('Token not found.');
         }
     }
 
@@ -120,13 +119,13 @@ class AccessTokenService
             $token = Token::whereId($tokenId)->first();
 
             if (!$token) {
-                throw new Exception('Token not found.');
+                throw new \Exception('Token not found.');
             }
 
             $token->update(['revoked' => 1]);
             return true;
         } catch (\Exception $exception) {
-            throw new Exception('Token not found.');
+            throw new $exception('Token not found.');
         }
     }
 
@@ -138,13 +137,13 @@ class AccessTokenService
             $token = Token::whereId($decodeToken['payload']['jti'])->first();
 
             if (!$token) {
-                throw new Exception('Token not found.');
+                throw new \Exception('Token not found.');
             }
 
             $token->update(['revoked' => 1]);
             return true;
         } catch (\Exception $exception) {
-            throw new Exception('Token not found.');
+            throw new \Exception('Token not found.');
         }
     }
 
