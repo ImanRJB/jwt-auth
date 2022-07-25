@@ -61,10 +61,10 @@ class AccessTokenService
                 'user_id' => $user->id,
                 'user_agent' => $userAgent,
                 'ip' => $ip,
-                'location' =>  Location::get($ip) ? Location::get($ip)->countryName : null,
+//                'location' =>  Location::get($ip) ? Location::get($ip)->countryName : null,
             ]);
 
-            $jwt = JWT::encode($data, config('jwt-auth.private_key'), 'RS256');
+            $jwt = JWT::encode($data, config('jwt-auth.jwt_key'), 'HS512');
 
             $respone = [
                 'token_type' => 'Bearer',
@@ -97,7 +97,7 @@ class AccessTokenService
     public function checkToken($token)
     {
         try {
-            $decodeToken = JWT::decode($token, new Key(config('jwt-auth.public_key'), 'RS256'));
+            $decodeToken = JWT::decode($token, new Key(config('jwt-auth.jwt_key'), 'HS512'));
             $decodeToken = json_decode(json_encode($decodeToken), true);
             $token = Token::whereId($decodeToken['payload']['jti'])->first();
 
