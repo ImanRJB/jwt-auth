@@ -149,6 +149,6 @@ class AccessTokenService
 
     public function getActiveTokens($user)
     {
-        return Token::whereUserId($user->id)->get();
+        return Token::whereUserId($user->id)->whereRevoked(0)->get();
     }
 }
