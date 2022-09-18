@@ -149,6 +149,21 @@ class AccessTokenService
 
     public function getActiveTokens($user)
     {
-        return Token::whereUserId($user->id)->whereRevoked(0)->get();
+        $token = request()->bearerToken();
+        $decodeToken = JWT::decode($token, new Key(config('jwt-auth.jwt_secret'), 'HS512'));
+        $decodeToken = json_decode(json_encode($decodeToken), true);
+        $current = Token::whereId($decodeToken['payload']['jti'])->first();
+
+        $tokens = Token::whereUserId($user->id)->whereRevoked(0)->orderBy('created_at', 'desc')->get();
+
+        foreach ($tokens as $token) {
+            if ($token->id == $current->id) {
+                $token['current'] = 1;
+            } else {
+                $token['current'] = 0;
+            }
+        }
+
+        return $tokens;
     }
 }
