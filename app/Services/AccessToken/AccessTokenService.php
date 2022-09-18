@@ -18,12 +18,12 @@ class AccessTokenService
         try {
             $now = Carbon::now();
             $nowMs = $now->getTimestampMs();
-            $expiresIn = $now->addMinutes(config('jwt-auth.access_token_lifetime'));
+            $expiresIn = Carbon::now()->addMinutes(config('jwt-auth.access_token_lifetime'));
             $expiresInMs = $expiresIn->getTimestampMs();
 
             $refreshToken = bin2hex(random_bytes(391));
             $refreshTokenHash = hash('sha256', $refreshToken);
-            $refreshTokenExpiresAt = $now->addMinutes(config('jwt-auth.refresh_token_lifetime'));
+            $refreshTokenExpiresAt = Carbon::now()->addMinutes(config('jwt-auth.refresh_token_lifetime'));
 
 
             $token_id = bin2hex(random_bytes(32));
