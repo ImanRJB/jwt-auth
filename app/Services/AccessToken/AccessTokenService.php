@@ -101,13 +101,10 @@ class AccessTokenService
             $decodeToken = json_decode(json_encode($decodeToken), true);
             $token = Token::whereId($decodeToken['payload']['jti'])->first();
 
-            if (!$token) {
-                throw new \Exception('Token not found.');
-            } elseif ($token->expires_at < Carbon::now() or $token->revoked) {
-                throw new \Exception('Token has been expired.');
+            if ($token and $token->expires_at > Carbon::now() and !$token->revoked) {
+                return $token->user;
             }
-
-            return $token->user;
+            return;
         } catch (\Exception $exception) {
             throw new $exception('Token not found.');
         }
@@ -132,7 +129,7 @@ class AccessTokenService
     public function revokeByToken($token)
     {
         try {
-            $decodeToken = JWT::decode($token, new Key(config('jwt-auth.public_key'), 'RS256'));
+            $decodeToken = JWT::decode($token, new Key(config('jwt-auth.jwt_secret'), 'HS512'));
             $decodeToken = json_decode(json_encode($decodeToken), true);
             $token = Token::whereId($decodeToken['payload']['jti'])->first();
 
