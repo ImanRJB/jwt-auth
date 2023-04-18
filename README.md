@@ -18,15 +18,15 @@ composer require imanrjb/jwt-auth
 // Add this lines in "App\Providers\AuthServiceProvider"
 
 public function boot(): void
-    {
-        $this->app['auth']->viaRequest('api', function ($request) {
-            $token = $request->bearerToken();
-            if($token) {
-                return AccessToken::checkToken($token);
-            }
-            return;
-        });
-    }
+{
+    $this->app['auth']->viaRequest('api', function ($request) {
+        $token = $request->bearerToken();
+        if($token) {
+            return AccessToken::checkToken($token);
+        }
+        return;
+    });
+}
 ```
 ```php
 // Change the "config/auth.php" file
