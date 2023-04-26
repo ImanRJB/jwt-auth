@@ -85,13 +85,14 @@ class AccessTokenService
         $token = Token::whereRefreshToken($refreshTokenHash)->first();
 
         if (!$token) {
-            throw new \Exception('Token not found.');
+            return;
         } elseif ($token->refresh_token_expires_at < Carbon::now() or $token->revoked) {
-            throw new \Exception('Token has been expired.');
+            return;
+        } else {
+            $token->update(['revoked' => 1]);
+            return $this->create($token->user, $userAgent, $ip, $aud, $scope);
         }
-
-        $token->update(['revoked' => 1]);
-        return $this->create($token->user, $userAgent, $ip, $aud, $scope);
+        return;
     }
 
     public function checkToken($token)
