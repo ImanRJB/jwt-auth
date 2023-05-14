@@ -17,6 +17,8 @@ class JwtAuthServiceProvider extends ServiceProvider
         if (file_exists(__DIR__ . '/../config/location.php')) {
             $this->mergeConfigFrom(__DIR__ . '/../config/location.php', 'location');
         }
+        
+        $this->loadMigrationsFrom(__DIR__.'/../migrations');
 
         $this->app->alias(\ImanRjb\JwtAuth\Services\AccessToken\AccessToken::class, 'AccessToken');
         $this->app->register(\ImanRjb\JwtAuth\Services\AccessToken\AccessTokenServiceProvider::class);
